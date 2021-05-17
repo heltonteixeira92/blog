@@ -1,2 +1,2 @@
 # blog
-a blog ceated followed the Antonio Melé book
+A blog ceated following the book by Antonio Melé.

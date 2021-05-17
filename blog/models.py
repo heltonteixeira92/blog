@@ -10,7 +10,7 @@ class Post(models.Model):
     )
 
     title = models.CharField(max_length=250)  # titulo da postagem
-    slug = models.SlugField(max_length=250, unique_for_date='published')  # o slug é usando compor urls mais elegantes
+    slug = models.SlugField(max_length=250, unique_for_date='publish')  # o slug é usando compor urls mais elegantes
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='blog_posts')  # relacionamento many-to-one(muitos para um)= um autor, varias postagens
     body = models.TextField()
     publish = models.DateTimeField(default=timezone.now)  # o datetime informa quando a postagem foi publicada, inclui o fuso horario
