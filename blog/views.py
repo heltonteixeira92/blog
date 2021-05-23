@@ -13,8 +13,8 @@ def post_list(request):  # a view post_list tem request como unico paramentro qu
 def post_detail(request, year, month, day, post):
     post = get_object_or_404(Post, slug=post,
                              status='published',
-                             published__year=year,
-                             published__month=month,
+                             publish__year=year,
+                             publish__month=month,
                              publish__day=day)
     return render(request,
                   'blog/post/detail.html',
