@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from .models import Post
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.generic import ListView
-
+from forms import EmailPostForm
 
 def post_list(request):  # a view post_list tem request como unico paramentro que é necessário em toda view
     object_list = Post.published.all()
@@ -40,3 +40,18 @@ class PostListView(ListView):
     paginate_by = 3
     template_name = 'blog/post/list.html'
 
+
+def post_share(request, post_id):
+    # obtém a postagem com base no id
+    post = get_object_or_404(Post, id=post_id, status='published')
+
+    if request.method == 'POST':
+        # Formulario foi submetido
+        form = EmailPostForm(request.POST)
+        if form.is_valid():
+            # Campos de formulário passaram pela validação
+            cd = form.cleaned_data
+        else:
+            form = EmailPostForm()
+        return render(request, 'blog/post/share.html', {'post': post,
+                                                        'form': form})
