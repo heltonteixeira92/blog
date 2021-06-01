@@ -2,7 +2,7 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
 from django.urls import reverse
-
+from taggit.managers import TaggableManager
 
 class PublishedManager(models.Manager):
     def get_queryset(self):
@@ -26,6 +26,7 @@ class Post(models.Model):
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='draft')  # foi usado o parametro choice para definir os valores a ser usado
     objects = models.Manager()  # o gerenciador default
     published = PublishedManager()  # nosso gerenciador personalizado
+    tags = TaggableManager()
 
     class Meta:
         ordering = ('-publish',)  # aqui dizemos ao django para que ordene os resultados com base no campo publish
