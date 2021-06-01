@@ -4,10 +4,17 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.generic import ListView
 from blog.forms import EmailPostForm, CommentForm
 from django.core.mail import send_mail
+from taggit.models import Tag
 
 
-def post_list(request):  # a view post_list tem request como unico paramentro que é necessário em toda view
+def post_list(request, tag_slug=None):  # a view post_list tem request como unico paramentro que é necessário em toda view
     object_list = Post.published.all()
+    tag = None
+
+    if tag_slug:
+        tag = get_object_or_404(Tag, slug=tag_slug)
+        object_list = object_list.filter(tags__in=[tag])
+
     paginator = Paginator(object_list, 3)  # três postagens em cada página
     page = request.GET.get('page')
     try:
@@ -21,7 +28,7 @@ def post_list(request):  # a view post_list tem request como unico paramentro qu
         posts = paginator.page(paginator.num_pages)
     return render(request,
                   'blog/post/list.html',
-                  {'page': page, 'posts': posts})  # (objeto request, path do temple, variáveis de contexto)
+                  {'page': page, 'posts': posts, 'tag': tag})  # (objeto request, path do temple, variáveis de contexto)
     # usamos o atalho render para renderizar a lista de postagens com o template especificado.
 
 
