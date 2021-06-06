@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from .feeds import LatestPostsFeed
 
 #  criar um arquivo urls.py para cada app é a melhor maneira de tornar a app reutilizavel para outros proj.
 app_name = 'blog'  # isso permite organizar os urls por aplicação e usar o nome ao referenciá-los
@@ -12,5 +13,6 @@ urlpatterns = [
     # esse padrão recebe os arg year,month... e é mapeado para a view post_detail
     path('<int:post_id>/share/', views.post_share, name='post_share'),
     path('tag/<slug:tag_slug>/', views.post_list, name='post_list_by_tag'),
+    path('feed/', LatestPostsFeed(), name='post_feed'),
 
   ]
