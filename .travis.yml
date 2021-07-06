@@ -1,8 +1,18 @@
 language: python
 python:
   - 3.9.0
+
+services:
+  - postgresql
+addons:
+  postgresql: '9.5'
+
 install:
   - pip install -q -r requirements.txt
   - cp contrib/env-sample .env
+
+before_script:
+  - psql -C "CREATE DATABASE testdb;" -U postgres
+
 script:
   - flake8
