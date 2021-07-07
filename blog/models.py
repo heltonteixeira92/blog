@@ -19,8 +19,8 @@ class Post(models.Model):
     slug = models.SlugField(max_length=250,
                             unique_for_date='publish')
     author = models.ForeignKey(User,
-                              on_delete=models.CASCADE,
-                              related_name='blog_posts')
+                               on_delete=models.CASCADE,
+                               related_name='blog_posts')
     body = models.TextField()
     publish = models.DateTimeField(default=timezone.now)
     created = models.DateTimeField(auto_now_add=True)
@@ -29,8 +29,8 @@ class Post(models.Model):
                               choices=STATUS_CHOICES,
                               default='draft')
 
-    objects = models.Manager() # The default manager.
-    published = PublishedManager() # Our custom manager.
+    objects = models.Manager()  # The default manager.
+    published = PublishedManager()  # Our custom manager.
     tags = TaggableManager()
 
     class Meta:
